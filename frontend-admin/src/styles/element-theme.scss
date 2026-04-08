@@ -1,0 +1,47 @@
+@forward "element-plus/theme-chalk/src/common/var.scss" with (
+  $colors: (
+    "primary": (
+      "base": #00D4FF
+    ),
+    "success": (
+      "base": #22c55e
+    ),
+    "warning": (
+      "base": #f59e0b
+    ),
+    "danger": (
+      "base": #ef4444
+    ),
+    "info": (
+      "base": #8b95a8
+    )
+  ),
+  $text-color: (
+    "primary": #e8ecf1,
+    "regular": #8b95a8,
+    "secondary": #4b5563,
+    "placeholder": #4b5563
+  ),
+  $bg-color: (
+    "": #0a1220,
+    "overlay": rgba(5, 10, 18, 0.92),
+    "page": #050a12
+  ),
+  $border-color: (
+    "": rgba(148, 180, 214, 0.08),
+    "light": rgba(148, 180, 214, 0.05),
+    "dark": rgba(148, 180, 214, 0.12)
+  ),
+  $fill-color: (
+    "": rgba(0, 212, 255, 0.06),
+    "light": rgba(0, 212, 255, 0.03),
+    "dark": rgba(0, 212, 255, 0.1),
+    "blank": transparent
+  ),
+  $border-radius: (
+    "base": 10px,
+    "small": 6px,
+    "round": 20px,
+    "circle": 100%
+  )
+);

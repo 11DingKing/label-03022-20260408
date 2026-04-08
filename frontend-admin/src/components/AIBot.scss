@@ -1,0 +1,442 @@
+.ai-bot {
+  position: fixed;
+  z-index: $z-ai-bot;
+  user-select: none;
+
+  &__avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: $radius-round;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform $transition-spring;
+
+    &:hover { transform: scale(1.1); }
+    &.is-active .ai-bot__avatar-inner {
+      border-color: $color-accent;
+      box-shadow: $shadow-glow-strong;
+    }
+    &.is-processing .ai-bot__avatar-inner {
+      animation: bot-pulse 1.5s ease-in-out infinite;
+    }
+  }
+
+  &__avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: $radius-round;
+    background: linear-gradient(145deg, #102038, $color-bg-card-solid);
+    border: 2px solid $color-border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    transition: all $transition-normal;
+    box-shadow: $shadow-card;
+  }
+
+  &__icon {
+    width: 36px;
+    height: 36px;
+    color: $color-accent;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.3));
+  }
+
+  &__pulse {
+    position: absolute;
+    inset: -4px;
+    border-radius: $radius-round;
+    border: 2px solid $color-accent;
+    opacity: 0;
+    animation: pulse-ring 2.5s ease-out infinite;
+    &--delay { animation-delay: 1.25s; }
+  }
+
+  // === 气泡菜单 ===
+  &__bubbles {
+    position: absolute;
+    bottom: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__bubble {
+    width: 48px;
+    height: 48px;
+    border-radius: $radius-round;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all $transition-spring;
+    font-size: 20px;
+    position: relative;
+
+    &--chat {
+      background: linear-gradient(135deg, #8b5cf6, #5b21b6);
+      color: #fff;
+      box-shadow: $shadow-glow-purple;
+      &:hover {
+        transform: scale(1.15);
+        box-shadow: 0 0 32px rgba(139, 92, 246, 0.35);
+      }
+    }
+
+    &--nav {
+      background: $color-bg-card;
+      backdrop-filter: blur(16px);
+      border: 1px solid $color-border;
+      color: $color-text-secondary;
+      box-shadow: $shadow-sm;
+      &:hover {
+        border-color: $color-accent;
+        color: $color-accent;
+        transform: scale(1.1);
+        box-shadow: $shadow-glow;
+      }
+      &.is-current {
+        border-color: $color-accent;
+        color: $color-accent;
+        background: $color-accent-light;
+        box-shadow: 0 0 16px rgba(0, 212, 255, 0.15);
+      }
+    }
+  }
+}
+
+// === 模态框对话面板 ===
+.ai-bot-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+
+  &__content {
+    width: 560px;
+    max-width: 90vw;
+    height: 600px;
+    max-height: 80vh;
+    background: $color-bg-card-solid;
+    border: 1px solid $color-border;
+    border-radius: $radius-xl;
+    box-shadow: 0 32px 100px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(148, 180, 214, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, $color-accent, $color-purple, $color-accent);
+      background-size: 200% 100%;
+      animation: gradient-shift 3s linear infinite;
+      z-index: 1;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg $spacing-xl;
+    border-bottom: 1px solid $color-border;
+    background: rgba(5, 10, 18, 0.5);
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-size: 18px;
+    font-weight: 700;
+    background: linear-gradient(135deg, $color-accent, $color-accent-soft);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+    color: $color-accent;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-md;
+  }
+
+  &__btn {
+    font-size: 20px;
+    color: $color-text-muted;
+    cursor: pointer;
+    transition: all $transition-fast;
+    padding: $spacing-xs;
+    border-radius: $radius-sm;
+    
+    &:hover { 
+      color: $color-text-primary; 
+      background: rgba(255, 255, 255, 0.06); 
+    }
+  }
+
+  &__messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-lg $spacing-xl;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  &__message {
+    max-width: 80%;
+    animation: msg-slide-in 0.3s ease-out;
+
+    &--user {
+      align-self: flex-end;
+      .ai-bot-modal__message-content {
+        background: linear-gradient(135deg, $color-accent, #0099cc);
+        color: $color-bg-deep;
+        border-radius: $radius-lg $radius-lg $radius-xs $radius-lg;
+        font-weight: 500;
+      }
+      .ai-bot-modal__message-time { text-align: right; }
+    }
+
+    &--assistant {
+      align-self: flex-start;
+      .ai-bot-modal__message-content {
+        background: $color-bg-elevated;
+        border: 1px solid $color-border;
+        border-radius: $radius-lg $radius-lg $radius-lg $radius-xs;
+        color: $color-text-primary;
+      }
+    }
+  }
+
+  &__message-content {
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  &__message-time {
+    font-size: 11px;
+    color: $color-text-muted;
+    margin-top: 6px;
+    padding: 0 4px;
+    font-family: $font-family-mono;
+  }
+
+  &__typing {
+    display: flex;
+    gap: 6px;
+    padding: 14px 18px;
+    span {
+      width: 10px;
+      height: 10px;
+      border-radius: $radius-round;
+      background: $color-accent;
+      animation: typing-dot 1.4s ease-in-out infinite;
+      &:nth-child(2) { animation-delay: 0.2s; }
+      &:nth-child(3) { animation-delay: 0.4s; }
+    }
+  }
+
+  &__input {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-lg $spacing-xl;
+    border-top: 1px solid $color-border;
+    background: rgba(5, 10, 18, 0.5);
+    
+    .el-input { 
+      flex: 1;
+      :deep(.el-input__wrapper) {
+        height: 40px;
+      }
+    }
+    .el-button { 
+      min-width: 80px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+  }
+
+  &__mic {
+    cursor: pointer;
+    font-size: 20px;
+    color: $color-text-muted;
+    transition: all $transition-fast;
+    
+    &:hover { color: $color-accent; }
+    &.is-listening {
+      color: $color-danger;
+      animation: mic-pulse 1s ease-in-out infinite;
+    }
+    &.is-unsupported {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// === 动画 ===
+.bubble-pop-enter-active {
+  transition: all 0.4s $transition-spring;
+}
+.bubble-pop-leave-active {
+  transition: all 0.2s ease-in;
+}
+.bubble-pop-enter-from, .bubble-pop-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) scale(0.4);
+}
+
+.modal-fade-enter-active {
+  transition: all 0.3s ease-out;
+  .ai-bot-modal__content {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+.modal-fade-leave-active {
+  transition: all 0.2s ease-in;
+  .ai-bot-modal__content {
+    transition: all 0.2s ease-in;
+  }
+}
+.modal-fade-enter-from, .modal-fade-leave-to {
+  opacity: 0;
+  .ai-bot-modal__content {
+    transform: scale(0.9) translateY(20px);
+  }
+}
+
+@keyframes pulse-ring {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.6); }
+}
+
+@keyframes bot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+  50% { box-shadow: 0 0 24px 6px rgba(0, 212, 255, 0.15); }
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-6px); }
+}
+
+@keyframes mic-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes msg-slide-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+// === 响应式：手机屏幕适配 ===
+@media (max-width: 640px) {
+  .ai-bot {
+    // 手机上强制显示在右下角，覆盖 JS 设置的 position
+    left: auto !important;
+    top: auto !important;
+    right: 16px;
+    bottom: 16px;
+
+    &__avatar {
+      width: 52px;
+      height: 52px;
+    }
+
+    &__icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    &__bubbles {
+      bottom: 60px;
+      gap: 10px;
+    }
+
+    &__bubble {
+      width: 42px;
+      height: 42px;
+      font-size: 18px;
+    }
+  }
+
+  .ai-bot-modal {
+    &__content {
+      width: 100vw;
+      height: 100vh;
+      max-width: 100vw;
+      max-height: 100vh;
+      border-radius: 0;
+    }
+
+    &__header {
+      padding: 12px 16px;
+    }
+
+    &__messages {
+      padding: 12px 16px;
+    }
+
+    &__input {
+      padding: 12px 16px;
+      .el-button { min-width: 60px; }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-bot {
+    right: 12px;
+    bottom: 12px;
+
+    &__avatar {
+      width: 48px;
+      height: 48px;
+    }
+
+    &__icon {
+      width: 26px;
+      height: 26px;
+    }
+
+    &__bubble {
+      width: 38px;
+      height: 38px;
+      font-size: 16px;
+    }
+  }
+}

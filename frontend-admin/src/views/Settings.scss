@@ -1,0 +1,485 @@
+.settings {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  background: $color-bg-deep;
+
+  &__sidebar {
+    width: 210px;
+    background: $color-bg-card;
+    backdrop-filter: blur(24px);
+    border-right: 1px solid $color-border;
+    padding: $spacing-lg $spacing-sm;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+    box-shadow: 2px 0 24px rgba(0, 0, 0, 0.2);
+  }
+
+  &__nav-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: 10px $spacing-md;
+    border-radius: $radius-md;
+    font-size: 13px;
+    color: $color-text-secondary;
+    cursor: pointer;
+    transition: all $transition-fast;
+    letter-spacing: 0.02em;
+    position: relative;
+    .el-icon { font-size: 17px; }
+
+    &:hover {
+      background: $color-accent-subtle;
+      color: $color-text-primary;
+    }
+
+    &.is-active {
+      background: $color-accent-light;
+      color: $color-accent;
+      font-weight: 600;
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 6px;
+        bottom: 6px;
+        width: 3px;
+        border-radius: 0 3px 3px 0;
+        background: $color-accent;
+        box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+      }
+    }
+  }
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-lg $spacing-xl;
+    background:
+      radial-gradient(ellipse 50% 40% at 80% 10%, rgba(0, 212, 255, 0.03) 0%, transparent 60%),
+      transparent;
+  }
+
+  &__panel { max-width: 100%; }
+
+  &__panel-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: $color-text-primary;
+    margin-bottom: $spacing-lg;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    letter-spacing: 0.01em;
+  }
+
+  &__form {
+    .el-form-item__label { 
+      color: $color-text-primary;
+      font-weight: 500;
+    }
+  }
+
+  // === 头像 ===
+  &__avatar {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__avatar-placeholder {
+    width: 68px;
+    height: 68px;
+    border-radius: $radius-round;
+    background: linear-gradient(135deg, $color-accent-light, $color-purple-light);
+    border: 2px solid $color-border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-accent;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+    transition: all $transition-normal;
+    cursor: pointer;
+    overflow: hidden;
+    &:hover {
+      border-color: $color-accent;
+      box-shadow: $shadow-glow;
+    }
+  }
+
+  &__avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: $radius-round;
+  }
+
+  // === 主题 ===
+  &__themes {
+    display: flex;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+  }
+
+  &__theme-card {
+    width: 165px;
+    background: $color-bg-card;
+    backdrop-filter: blur(24px);
+    border-radius: $radius-lg;
+    padding: $spacing-md;
+    cursor: pointer;
+    text-align: center;
+    transition: all $transition-normal;
+    border: 1px solid $color-border;
+    box-shadow: $shadow-sm;
+    position: relative;
+    overflow: hidden;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, $color-accent, $color-purple);
+      opacity: 0;
+      transition: opacity $transition-normal;
+    }
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: $shadow-card-hover;
+      &::before { opacity: 0.5; }
+    }
+    &.is-active {
+      border-color: $color-accent;
+      box-shadow: $shadow-glow;
+      &::before { opacity: 1; }
+    }
+  }
+
+  &__theme-preview {
+    height: 80px;
+    border-radius: $radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: $spacing-sm;
+    border: 1px solid $color-border-subtle;
+  }
+
+  &__theme-accent {
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-round;
+    box-shadow: 0 0 16px currentColor;
+    transition: transform $transition-normal;
+    .settings__theme-card:hover & { transform: scale(1.15); }
+  }
+
+  &__theme-name {
+    font-size: 13px;
+    color: $color-text-primary;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  // === 对话历史 ===
+  &__history {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  &__history-item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background: $color-accent-subtle;
+    border-radius: $radius-md;
+    border: 1px solid $color-border-subtle;
+    transition: all $transition-fast;
+    &:hover {
+      background: rgba(0, 212, 255, 0.06);
+      border-color: $color-border;
+    }
+  }
+
+  &__history-content {
+    flex: 1;
+    font-size: 13px;
+    color: $color-text-primary;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  &__history-time {
+    font-size: 11px;
+    color: $color-text-muted;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: $font-family-mono;
+    letter-spacing: 0.04em;
+  }
+
+  // === SOP ===
+  &__sop-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md;
+    background: $color-bg-card;
+    backdrop-filter: blur(24px);
+    border-radius: $radius-md;
+    border: 1px solid $color-border;
+    margin-bottom: $spacing-md;
+    font-size: 14px;
+    color: $color-text-primary;
+    box-shadow: $shadow-sm;
+  }
+
+  &__sop-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__sop-item {
+    background: $color-bg-card;
+    backdrop-filter: blur(24px);
+    border-radius: $radius-lg;
+    padding: $spacing-md;
+    border: 1px solid $color-border;
+    box-shadow: $shadow-sm;
+    transition: all $transition-normal;
+    position: relative;
+    overflow: hidden;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.12), transparent);
+    }
+    &:hover {
+      border-color: rgba(148, 180, 214, 0.12);
+      box-shadow: $shadow-card;
+    }
+  }
+
+  &__sop-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__sop-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: $color-text-bright;
+    letter-spacing: 0.01em;
+  }
+
+  &__sop-content {
+    font-size: 14px;
+    color: $color-text-primary;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    margin-bottom: $spacing-sm;
+    max-height: 120px;
+    overflow: hidden;
+  }
+
+  &__sop-actions {
+    display: flex;
+    gap: $spacing-sm;
+  }
+
+  // === 知识库 ===
+  &__knowledge-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__knowledge-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    background: $color-bg-card;
+    backdrop-filter: blur(24px);
+    border-radius: $radius-lg;
+    padding: $spacing-md;
+    border: 1px solid $color-border;
+    box-shadow: $shadow-sm;
+    transition: all $transition-normal;
+    .el-icon { color: $color-accent; flex-shrink: 0; }
+    &:hover {
+      border-color: rgba(148, 180, 214, 0.12);
+      box-shadow: $shadow-card;
+    }
+  }
+
+  &__knowledge-info { flex: 1; }
+
+  &__knowledge-name {
+    font-size: 14px;
+    color: $color-text-primary;
+    font-weight: 500;
+  }
+
+  &__knowledge-meta {
+    font-size: 12px;
+    color: $color-text-muted;
+    margin-top: 3px;
+    font-family: $font-family-mono;
+    letter-spacing: 0.02em;
+  }
+}
+
+// === 响应式布局 ===
+@include respond-to('lg') {
+  .settings {
+    &__sidebar { width: 180px; padding: $spacing-md $spacing-xs; }
+    &__content { padding: $spacing-md; }
+  }
+}
+
+@include respond-to('md') {
+  .settings {
+    flex-direction: column;
+    overflow-y: auto;
+
+    &__sidebar {
+      width: 100%;
+      flex-direction: row;
+      overflow-x: auto;
+      padding: $spacing-sm;
+      gap: 2px;
+      border-right: none;
+      border-bottom: 1px solid $color-border;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    &__nav-item {
+      white-space: nowrap;
+      padding: 8px 12px;
+      font-size: 12px;
+      .el-icon { font-size: 15px; }
+      &.is-active::before {
+        top: auto;
+        bottom: 0;
+        left: 6px;
+        right: 6px;
+        width: auto;
+        height: 3px;
+        border-radius: 3px 3px 0 0;
+      }
+    }
+
+    &__content {
+      flex: 1;
+      padding: $spacing-md $spacing-sm;
+      overflow-y: auto;
+    }
+
+    &__panel-title {
+      font-size: 16px;
+      flex-wrap: wrap;
+      gap: $spacing-sm;
+    }
+
+    &__themes {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__theme-card {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      padding: $spacing-sm $spacing-md;
+    }
+
+    &__theme-preview {
+      width: 60px;
+      height: 50px;
+      flex-shrink: 0;
+      margin-bottom: 0;
+    }
+
+    &__theme-name {
+      flex: 1;
+    }
+
+    &__sop-actions {
+      flex-wrap: wrap;
+    }
+
+    &__knowledge-item {
+      padding: $spacing-sm;
+    }
+
+    &__history-item {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+@include respond-to('sm') {
+  .settings {
+    &__sidebar {
+      gap: 0;
+    }
+    &__nav-item {
+      padding: 6px 10px;
+      font-size: 11px;
+      gap: 4px;
+      .el-icon { font-size: 14px; }
+    }
+    &__content {
+      padding: $spacing-sm;
+    }
+    &__panel-title {
+      font-size: 15px;
+      margin-bottom: $spacing-md;
+    }
+    &__form {
+      .el-form-item { margin-bottom: 12px; }
+    }
+    &__avatar-placeholder {
+      width: 56px;
+      height: 56px;
+    }
+    &__sop-content {
+      font-size: 13px;
+      max-height: 80px;
+    }
+  }
+}
+
+// === 移动端弹窗优化 ===
+@media (max-width: 640px) {
+  .el-dialog {
+    .el-dialog__footer {
+      display: flex;
+      gap: 8px;
+      .el-button { flex: 1; }
+    }
+  }
+}

@@ -1,0 +1,466 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/stores/ai.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/stores</a> ai.js</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">93.93% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>62/66</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">95.08% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>58/61</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>11/11</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">93.65% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>59/63</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">342x</span>
+<span class="cline-any cline-yes">342x</span>
+<span class="cline-any cline-yes">342x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">80x</span>
+<span class="cline-any cline-yes">80x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">55x</span>
+<span class="cline-any cline-yes">55x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">55x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">114x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { defineStore } from 'pinia'
+import { ref, watch } from 'vue'
+import { createLogger } from '@/utils/logger'
+&nbsp;
+const log = createLogger('AIStore')
+&nbsp;
+// 默认欢迎消息
+const defaultMessages = [
+  { id: 'm0', role: 'assistant', content: '你好，张明华！我是视频分析AI助手小智。我可以帮你：\n\n• 导航到任意页面（说"打开视频库"）\n• 分析视频内容并识别安全隐患\n• 生成合规检测报告\n• 管理SOP标准操作规程\n\n今天有3条未读通知，2个待处理任务。需要我帮你处理什么？', timestamp: new Date().toISOString() }
+]
+&nbsp;
+/**
+ * 从 localStorage 加载数据
+ */
+function loadFromStorage(key, defaultValue) {
+  try {
+    const stored = localStorage.getItem(key)
+    return stored ? <span class="branch-0 cbranch-no" title="branch not covered" >JSON.parse(stored) </span>: defaultValue
+  } catch (e) {
+<span class="cstat-no" title="statement not covered" >    log.warn('加载存储数据失败', { key, error: e.message })</span>
+<span class="cstat-no" title="statement not covered" >    return defaultValue</span>
+  }
+}
+&nbsp;
+/**
+ * 保存数据到 localStorage
+ */
+function saveToStorage(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value))
+  } catch (e) {
+<span class="cstat-no" title="statement not covered" >    log.warn('保存存储数据失败', { key, error: e.message })</span>
+  }
+}
+&nbsp;
+export const useAIStore = defineStore('ai', () =&gt; {
+  let _msgIdCounter = 0
+  const messages = ref(loadFromStorage('ai_messages', defaultMessages))
+  const isExpanded = ref(loadFromStorage('ai_isExpanded', false))
+  const isBubbleMenuOpen = ref(false)
+  const isListening = ref(false)
+  const isProcessing = ref(false)
+  const position = ref(loadFromStorage('ai_position', { x: 60, y: typeof window !== 'undefined' ? window.innerHeight - 160 : <span class="branch-1 cbranch-no" title="branch not covered" >600 </span>}))
+&nbsp;
+  // 监听变化并持久化
+  watch(messages, (val) =&gt; saveToStorage('ai_messages', val), { deep: true })
+  watch(isExpanded, (val) =&gt; saveToStorage('ai_isExpanded', val))
+  watch(position, (val) =&gt; saveToStorage('ai_position', val), { deep: true })
+&nbsp;
+  function addMessage(role, content) {
+    _msgIdCounter++
+    messages.value.push({
+      id: `m${Date.now()}_${_msgIdCounter}`,
+      role,
+      content,
+      timestamp: new Date().toISOString()
+    })
+    log.info('添加消息', { role, contentLength: content.length })
+  }
+&nbsp;
+  // 模拟AI回复 - 增强版，支持更多上下文理解
+  function simulateReply(userMsg) {
+    isProcessing.value = true
+    const lowerMsg = userMsg.toLowerCase()
+&nbsp;
+    setTimeout(() =&gt; {
+      let reply = '我理解了你的问题，让我为你处理。'
+&nbsp;
+      // 导航相关
+      if (lowerMsg.includes('驾驶舱') || lowerMsg.includes('首页') || lowerMsg.includes('主页')) {
+        reply = '好的，正在为你跳转到驾驶舱首页。这里可以查看系统概览、任务进度和通知信息。'
+      } else if (lowerMsg.includes('视频库') || lowerMsg.includes('视频列表') || lowerMsg.includes('所有视频')) {
+        reply = '好的，正在为你打开视频库。你可以在这里浏览、搜索和管理所有上传的视频文件。'
+      } else if (lowerMsg.includes('分析') || lowerMsg.includes('检测')) {
+        reply = '好的，正在为你打开视频分析页面。选择一个视频后，AI将自动进行合规性检测和内容分析。'
+      } else if (lowerMsg.includes('设置') || lowerMsg.includes('个人中心') || lowerMsg.includes('配置')) {
+        reply = '好的，正在为你打开个人中心设置页。你可以在这里修改个人信息、系统偏好和通知设置。'
+      }
+      // 功能相关
+      else if (lowerMsg.includes('报告') || lowerMsg.includes('导出')) {
+        reply = '我可以帮你生成视频分析报告。报告支持HTML、PDF和JSON三种格式导出。请先选择一个已分析完成的视频，然后点击"生成报告"按钮。'
+      } else if (lowerMsg.includes('上传') || lowerMsg.includes('添加视频')) {
+        reply = '要上传新视频，请前往视频库页面，点击右上角的"上传视频"按钮。支持MP4、AVI、MOV等常见格式，单个文件最大支持2GB。'
+      } else if (lowerMsg.includes('搜索') || lowerMsg.includes('查找')) {
+        reply = '你可以在视频库页面使用搜索功能。支持按视频名称、上传日期、分析状态等条件进行筛选。'
+      }
+      // 帮助相关
+      else if (lowerMsg.includes('帮助') || lowerMsg.includes('你能做什么') || lowerMsg.includes('功能')) {
+        reply = '我是视频分析AI助手小智，可以帮你：\n\n🚀 导航控制\n• 说"打开视频库"跳转到视频管理\n• 说"去分析页面"开始视频分析\n\n📊 视频分析\n• 自动识别视频中的安全隐患\n• 检测SOP合规性问题\n• 生成详细分析报告\n\n📝 报告管理\n• 支持HTML/PDF/JSON格式导出\n• 可编辑报告内容和备注\n\n还有什么我可以帮你的吗？'
+      } else <span class="missing-if-branch" title="if path not taken" >I</span>if (lowerMsg.includes('语音') || lowerMsg.includes('声音')) {
+<span class="cstat-no" title="statement not covered" >        reply = '语音功能说明：\n• 点击麦克风图标开始语音输入\n• 支持自然语言导航指令\n• 说"打开XX"可快速跳转页面\n• 语音识别需要浏览器授权麦克风权限'</span>
+      }
+      // 状态查询
+      else if (lowerMsg.includes('任务') || lowerMsg.includes('待办')) {
+        reply = '让我查看一下你的任务情况...\n\n📋 今日任务概览：\n• 2个待处理任务\n• 1个进行中任务\n• 3个已完成任务\n\n需要我帮你查看具体任务详情吗？'
+      } else if (lowerMsg.includes('通知') || lowerMsg.includes('消息')) {
+        reply = '你有3条未读通知：\n\n1. 系统更新提醒\n2. 视频分析完成通知\n3. 新功能上线公告\n\n点击右上角通知区域可查看详情。'
+      }
+      // 问候
+      else if (lowerMsg.includes('你好') || lowerMsg.includes('嗨') || lowerMsg.includes('hi')) {
+        reply = '你好！我是小智，很高兴为你服务。今天有什么我可以帮你的吗？'
+      } else if (lowerMsg.includes('谢谢') || lowerMsg.includes('感谢')) {
+        reply = '不客气！如果还有其他问题，随时告诉我。祝你工作顺利！'
+      }
+      // 默认回复
+      else {
+        reply = `我理解你想了解"${userMsg}"相关的内容。\n\n目前我可以帮你：\n• 导航到任意页面\n• 分析视频内容\n• 生成分析报告\n• 查看任务和通知\n\n请告诉我具体需要什么帮助？`
+      }
+&nbsp;
+      addMessage('assistant', reply)
+      isProcessing.value = false
+    }, 600 + Math.random() * 600)
+  }
+&nbsp;
+  function sendMessage(content) {
+    log.action('发送消息', { content })
+    addMessage('user', content)
+    simulateReply(content)
+  }
+&nbsp;
+  function clearHistory() {
+    log.action('清空对话历史', { messageCount: messages.value.length })
+    messages.value = [defaultMessages[0]]
+  }
+&nbsp;
+  return { messages, isExpanded, isBubbleMenuOpen, isListening, isProcessing, position, addMessage, sendMessage, clearHistory }
+})
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-02-16T00:32:06.456Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    

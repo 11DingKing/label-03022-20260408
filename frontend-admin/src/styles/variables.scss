@@ -1,0 +1,142 @@
+// === 色彩体系 ===
+// 背景色
+$color-bg-deep: #050a12;
+$color-bg-primary: #0a1220;
+$color-bg-card: rgba(12, 22, 42, 0.75);
+$color-bg-card-solid: #0c162a;
+$color-bg-card-hover: rgba(16, 30, 56, 0.9);
+$color-bg-overlay: rgba(5, 10, 18, 0.92);
+$color-bg-elevated: rgba(18, 34, 62, 0.6);
+
+// 主题色
+$color-accent: #00d4ff;
+$color-accent-soft: #38bdf8;
+$color-accent-light: rgba(0, 212, 255, 0.12);
+$color-accent-glow: rgba(0, 212, 255, 0.35);
+$color-accent-subtle: rgba(0, 212, 255, 0.06);
+$color-purple: #8b5cf6;
+$color-purple-light: rgba(139, 92, 246, 0.12);
+$color-purple-glow: rgba(139, 92, 246, 0.35);
+$color-success: #22c55e;
+$color-success-light: rgba(34, 197, 94, 0.12);
+$color-warning: #f59e0b;
+$color-warning-light: rgba(245, 158, 11, 0.12);
+$color-danger: #ef4444;
+$color-danger-light: rgba(239, 68, 68, 0.12);
+
+$color-text-primary: #ffffff;
+$color-text-secondary: #c5d0dc;
+$color-text-muted: #8b95a8;
+$color-text-bright: #ffffff;
+
+$color-border: rgba(148, 180, 214, 0.08);
+$color-border-light: rgba(148, 180, 214, 0.05);
+$color-border-active: rgba(0, 212, 255, 0.3);
+$color-border-subtle: rgba(255, 255, 255, 0.04);
+
+// === 字体 ===
+$font-family: 'Inter', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-family-mono: 'Orbitron', 'JetBrains Mono', 'SF Mono', monospace;
+
+// === 间距 ===
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// === 圆角 ===
+$radius-xs: 4px;
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-xl: 18px;
+$radius-round: 50%;
+
+// === 阴影 ===
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 180, 214, 0.04);
+$shadow-card: 0 4px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 180, 214, 0.06);
+$shadow-card-hover: 0 12px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 212, 255, 0.1);
+$shadow-glow: 0 0 24px rgba(0, 212, 255, 0.2), 0 0 0 1px rgba(0, 212, 255, 0.15);
+$shadow-glow-strong: 0 0 40px rgba(0, 212, 255, 0.3), 0 4px 20px rgba(0, 0, 0, 0.3);
+$shadow-glow-purple: 0 0 24px rgba(139, 92, 246, 0.2), 0 0 0 1px rgba(139, 92, 246, 0.15);
+$shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+// === 动效 ===
+$transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// === 层级 ===
+$z-page: 1;
+$z-card: 10;
+$z-floating: 100;
+$z-modal: 1000;
+$z-ai-bot: 9999;
+
+// === 响应式断点 ===
+$breakpoint-xs: 480px;   // 手机竖屏
+$breakpoint-sm: 640px;   // 手机横屏
+$breakpoint-md: 768px;   // 平板竖屏
+$breakpoint-lg: 1024px;  // 平板横屏/小笔记本
+$breakpoint-xl: 1280px;  // 桌面
+$breakpoint-xxl: 1536px; // 大屏
+
+// === 响应式 Mixin ===
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'xs' {
+    @media (max-width: #{$breakpoint-xs}) { @content; }
+  } @else if $breakpoint == 'sm' {
+    @media (max-width: #{$breakpoint-sm}) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (max-width: #{$breakpoint-md}) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: #{$breakpoint-lg}) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (max-width: #{$breakpoint-xl}) { @content; }
+  } @else if $breakpoint == 'xxl' {
+    @media (max-width: #{$breakpoint-xxl}) { @content; }
+  }
+}
+
+// 最小宽度查询
+@mixin respond-from($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (min-width: #{$breakpoint-sm + 1}) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (min-width: #{$breakpoint-md + 1}) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (min-width: #{$breakpoint-lg + 1}) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: #{$breakpoint-xl + 1}) { @content; }
+  }
+}
+
+// 隐藏工具类 mixin
+@mixin hide-below($breakpoint) {
+  @include respond-to($breakpoint) {
+    display: none !important;
+  }
+}
+
+@mixin show-below($breakpoint) {
+  display: none !important;
+  @include respond-to($breakpoint) {
+    display: block !important;
+  }
+}
+
+// 布局收缩 mixin
+@mixin flex-wrap-below($breakpoint) {
+  @include respond-to($breakpoint) {
+    flex-wrap: wrap;
+  }
+}
+
+@mixin stack-below($breakpoint) {
+  @include respond-to($breakpoint) {
+    flex-direction: column;
+  }
+}

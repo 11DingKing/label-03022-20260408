@@ -1,0 +1,785 @@
+.dashboard {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-lg $spacing-xl;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 30% at 20% 80%, rgba(0, 212, 255, 0.04) 0%, transparent 40%),
+    $color-bg-deep;
+
+  // 驾驶舱边框
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    border-radius: 20px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  // HUD扫描线
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 212, 255, 0.012) 2px, rgba(0, 212, 255, 0.012) 4px);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  &__stars {
+    position: absolute;
+    border-radius: $radius-round;
+    background: rgba(148, 180, 214, 0.6);
+    animation: star-twinkle 3s ease-in-out infinite;
+    box-shadow: 0 0 3px rgba(148, 180, 214, 0.4);
+  }
+
+  // HUD边框装饰
+  &__hud-frame {
+    position: absolute;
+    inset: 12px;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  &__hud-corner {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 2px solid transparent;
+    
+    &--tl { top: 0; left: 0; border-top-color: rgba(0, 212, 255, 0.3); border-left-color: rgba(0, 212, 255, 0.3); }
+    &--tr { top: 0; right: 0; border-top-color: rgba(0, 212, 255, 0.3); border-right-color: rgba(0, 212, 255, 0.3); }
+    &--bl { bottom: 0; left: 0; border-bottom-color: rgba(139, 92, 246, 0.3); border-left-color: rgba(139, 92, 246, 0.3); }
+    &--br { bottom: 0; right: 0; border-bottom-color: rgba(139, 92, 246, 0.3); border-right-color: rgba(139, 92, 246, 0.3); }
+  }
+
+  &__hud-scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.4), transparent);
+    animation: hud-scan 4s linear infinite;
+  }
+
+  // === 顶部区域 ===
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    gap: $spacing-xl;
+    flex-shrink: 0;
+    z-index: $z-card;
+  }
+
+  &__top-left, &__top-right {
+    flex: 1;
+    max-width: 420px;
+  }
+
+  &__date {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+  }
+
+  &__date-day {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, $color-accent, $color-purple);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &__date-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &__date-weekday {
+    font-size: 15px;
+    font-weight: 600;
+    color: $color-text-primary;
+  }
+
+  &__date-full {
+    font-size: 12px;
+    color: $color-text-muted;
+    letter-spacing: 0.04em;
+  }
+
+  &__tasks, &__notifications {
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    padding: $spacing-md $spacing-lg;
+    backdrop-filter: blur(24px) saturate(1.2);
+    border: 1px solid $color-border;
+    box-shadow: $shadow-card;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+    }
+  }
+
+  &__section-label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-size: 12px;
+    font-weight: 600;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+    .el-icon { font-size: 14px; color: $color-accent; }
+  }
+
+  &__badge { margin-left: auto; }
+
+  &__tasks-scroll, &__notif-scroll {
+    max-height: 140px;
+    overflow: hidden;
+  }
+
+  &__task-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid $color-border-light;
+    &:last-child { border-bottom: none; }
+  }
+
+  &__task-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: $radius-round;
+    flex-shrink: 0;
+    &.is-completed { background: $color-success; box-shadow: 0 0 6px rgba(34, 197, 94, 0.4); }
+    &.is-in_progress { background: $color-accent; box-shadow: 0 0 6px rgba(0, 212, 255, 0.4); animation: dot-pulse 2s infinite; }
+    &.is-pending { background: $color-text-muted; }
+  }
+
+  &__task-title {
+    flex: 1;
+    font-size: 13px;
+    color: $color-text-primary;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__task-due {
+    font-size: 11px;
+    color: $color-text-muted;
+    font-family: $font-family-mono;
+    font-weight: 500;
+  }
+
+  &__notif-item {
+    padding: 10px 0;
+    border-bottom: 1px solid $color-border-light;
+    &:last-child { border-bottom: none; }
+    &.is-unread .dashboard__notif-title::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: $radius-round;
+      background: $color-accent;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+      margin-right: 8px;
+    }
+  }
+
+  &__notif-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: $color-text-primary;
+    display: flex;
+    align-items: center;
+  }
+
+  &__notif-content {
+    font-size: 12px;
+    color: $color-text-secondary;
+    margin-top: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__notif-time {
+    font-size: 11px;
+    color: $color-text-muted;
+    margin-top: 3px;
+    font-family: $font-family-mono;
+  }
+
+  // === 中央驾驶舱挡风玻璃区域 ===
+  &__center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: $z-card;
+    min-height: 0;
+    position: relative;
+  }
+
+  &__windshield {
+    position: relative;
+    width: 520px;
+    height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__windshield-frame {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__windshield-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.15));
+  }
+
+  // 雷达效果
+  &__radar {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    top: 20px;
+    right: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  &__radar-ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 50%;
+    
+    &--2 {
+      inset: 25%;
+    }
+  }
+
+  &__radar-sweep {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.8), transparent);
+    transform-origin: left center;
+    animation: radar-sweep 3s linear infinite;
+  }
+
+  &__radar-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: $color-accent;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
+    animation: radar-dot-blink 2s ease-in-out infinite;
+  }
+
+  // AI机器人区域（交互由全局 AIBot 组件提供）
+  &__ai-figure { 
+    text-align: center; 
+    z-index: 2;
+    position: relative;
+  }
+
+  &__ai-greeting {
+    font-size: 22px;
+    font-weight: 600;
+    color: $color-text-primary;
+    text-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+  }
+
+  &__ai-hint {
+    font-size: 12px;
+    color: $color-text-muted;
+    margin-top: $spacing-sm;
+    letter-spacing: 0.04em;
+  }
+
+  // 状态指示器
+  &__status-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    font-size: 11px;
+    font-family: $font-family-mono;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  &__status-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    
+    &.is-online {
+      background: $color-success;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+      animation: status-pulse 2s ease-in-out infinite;
+    }
+    
+    &.is-active {
+      background: $color-accent;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
+      animation: status-pulse 2s ease-in-out infinite 0.3s;
+    }
+    
+    &.is-standby {
+      background: $color-warning;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+    }
+  }
+
+  // === 底部驾驶舱仪表盘 ===
+  &__bottom {
+    flex-shrink: 0;
+    z-index: $z-card;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -15px -25px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, transparent 100%);
+      border-radius: 25px 25px 0 0;
+      pointer-events: none;
+    }
+  }
+
+  // 圆形仪表
+  &__circular-gauges {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  &__circular-gauge {
+    width: 90px;
+    height: 90px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__circular-svg {
+    position: absolute;
+    inset: 0;
+    transform: rotate(-90deg);
+  }
+
+  &__circular-progress {
+    transition: stroke-dasharray 1s ease-out;
+  }
+
+  &__circular-content {
+    display: flex;
+    align-items: baseline;
+    gap: 1px;
+  }
+
+  &__circular-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: $color-accent;
+  }
+
+  &__circular-unit {
+    font-size: 9px;
+    color: $color-text-muted;
+  }
+
+  &__circular-label {
+    font-size: 9px;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  // 主仪表盘
+  &__gauges {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    flex: 1;
+    position: relative;
+  }
+
+  &__gauge {
+    background: linear-gradient(135deg, rgba(12, 22, 42, 0.9) 0%, rgba(8, 16, 32, 0.95) 100%);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(0, 212, 255, 0.12);
+    border-radius: $radius-lg;
+    padding: 14px 10px 12px;
+    text-align: center;
+    box-shadow: $shadow-sm, inset 0 1px 0 rgba(255, 255, 255, 0.03), inset 0 -20px 40px rgba(0, 0, 0, 0.2);
+    transition: all $transition-normal;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, $color-accent, $color-purple, transparent);
+      opacity: 0.6;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-card-hover, 0 0 30px rgba(0, 212, 255, 0.1);
+      border-color: rgba(0, 212, 255, 0.25);
+      .dashboard__gauge-num { text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+    }
+  }
+
+  &__gauge-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 12px;
+    color: rgba(0, 212, 255, 0.3);
+  }
+
+  &__gauge-value {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  &__gauge-num {
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(135deg, $color-accent, $color-accent-soft);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    transition: text-shadow 0.3s;
+  }
+
+  &__gauge-unit {
+    font-size: 10px;
+    color: $color-text-muted;
+    font-weight: 500;
+  }
+
+  &__gauge-label {
+    font-size: 10px;
+    color: $color-text-secondary;
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  &__gauge-trend {
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    margin-top: 3px;
+    font-weight: 600;
+    &.is-up { color: $color-success; }
+    &.is-down { color: $color-danger; }
+    .el-icon { font-size: 10px; }
+  }
+
+  &__gauge-bar {
+    height: 3px;
+    background: rgba(148, 180, 214, 0.08);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+
+  &__gauge-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, $color-accent, $color-purple);
+    border-radius: 2px;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+  }
+
+  // 迷你雷达
+  &__mini-radar {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(0, 212, 255, 0.03);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+  }
+
+  &__mini-radar-ring {
+    position: absolute;
+    inset: 20%;
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  &__mini-radar-cross {
+    position: absolute;
+    inset: 0;
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      background: rgba(0, 212, 255, 0.1);
+    }
+    &::before {
+      top: 50%;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+    }
+    &::after {
+      left: 50%;
+      top: 10%;
+      bottom: 10%;
+      width: 1px;
+    }
+  }
+
+  &__mini-radar-sweep {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.6), transparent);
+    transform-origin: left center;
+    animation: radar-sweep 2s linear infinite;
+  }
+}
+
+
+// === 动画关键帧 ===
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.2); }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes hud-scan {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes radar-sweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes radar-dot-blink {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ai-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+
+// === 响应式布局 ===
+@include respond-to('xl') {
+  .dashboard {
+    padding: $spacing-md $spacing-lg;
+    &__gauges { grid-template-columns: repeat(4, 1fr); }
+    &__windshield { width: 420px; height: 320px; }
+    &__circular-gauges { display: none; }
+    &__mini-radar { display: none; }
+  }
+}
+
+@include respond-to('lg') {
+  .dashboard {
+    &__top { flex-direction: column; gap: $spacing-md; }
+    &__top-left, &__top-right { max-width: 100%; }
+    &__gauges { grid-template-columns: repeat(4, 1fr); }
+    &__center { min-height: 220px; }
+    &__windshield { width: 340px; height: 260px; }
+    &__ai-greeting { font-size: 18px; }
+    &__radar { display: none; }
+    &__status-indicators { display: none; }
+  }
+}
+
+@include respond-to('md') {
+  .dashboard {
+    padding: $spacing-sm $spacing-md;
+    overflow-y: auto;
+    &__gauges { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    &__gauge { padding: 12px 8px; }
+    &__gauge-num { font-size: 18px; }
+    &__date-day { font-size: 36px; }
+    &__tasks-scroll, &__notif-scroll { max-height: 100px; }
+    &__hud-frame { display: none; }
+    &__bottom { flex-direction: column; }
+  }
+}
+
+@include respond-to('sm') {
+  .dashboard {
+    padding: $spacing-xs $spacing-sm;
+    overflow-y: auto;
+    gap: $spacing-sm;
+
+    &::before { display: none; }
+
+    &__top {
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+    &__top-left, &__top-right { max-width: 100%; }
+
+    &__date {
+      justify-content: center;
+    }
+    &__date-day { font-size: 32px; }
+    &__date-weekday { font-size: 13px; }
+
+    &__tasks, &__notifications {
+      padding: $spacing-sm $spacing-md;
+    }
+    &__tasks-scroll, &__notif-scroll { max-height: 90px; }
+
+    &__center {
+      min-height: 50px;
+      flex: 0;
+      padding: $spacing-sm 0;
+    }
+    &__windshield {
+      width: 100%;
+      height: auto;
+      min-height: 50px;
+    }
+    &__windshield-frame { display: none; }
+    &__radar { display: none; }
+    &__status-indicators { display: none; }
+    &__ai-greeting { font-size: 18px; }
+    &__ai-hint { font-size: 11px; }
+
+    &__bottom {
+      flex-direction: column;
+      gap: $spacing-sm;
+      &::before { display: none; }
+    }
+    &__circular-gauges {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+    &__circular-gauge {
+      width: 80px;
+      height: 80px;
+    }
+    &__circular-value { font-size: 16px; }
+    &__circular-label { font-size: 8px; }
+
+    &__gauges {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    &__gauge {
+      padding: 12px 8px 10px;
+    }
+    &__gauge-num { font-size: 18px; }
+    &__gauge-label { font-size: 9px; }
+    &__gauge-trend { font-size: 9px; }
+    &__gauge-bar { margin-top: 6px; }
+
+    &__mini-radar { display: none; }
+    &__hud-frame { display: none; }
+  }
+}
+
+@include respond-to('xs') {
+  .dashboard {
+    &__circular-gauges { gap: 6px; }
+    &__circular-gauge {
+      width: 70px;
+      height: 70px;
+    }
+    &__circular-value { font-size: 14px; }
+    &__gauge-num { font-size: 16px; }
+  }
+}

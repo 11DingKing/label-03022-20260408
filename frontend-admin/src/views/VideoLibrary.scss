@@ -1,0 +1,447 @@
+.video-lib {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-lg;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% -10%, rgba(0, 212, 255, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 100%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
+    $color-bg-deep;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-md;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    padding-bottom: $spacing-sm;
+  }
+
+  &__search {
+    display: flex;
+    gap: $spacing-sm;
+    flex: 1;
+    flex-wrap: wrap;
+  }
+
+  &__search-input { width: 260px; }
+  &__filter-select { width: 160px; }
+  &__date-picker { width: 260px; }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+  }
+
+  &__stats {
+    display: flex;
+    gap: $spacing-lg;
+    padding: $spacing-sm 0 $spacing-md;
+    flex-shrink: 0;
+  }
+
+  &__stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-sm $spacing-md;
+    background: $color-bg-card;
+    border-radius: $radius-md;
+    border: 1px solid $color-border;
+    min-width: 80px;
+  }
+
+  &__stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: $font-family-mono;
+    line-height: 1.2;
+  }
+
+  &__stat-label {
+    font-size: 11px;
+    color: $color-text-muted;
+    margin-top: 2px;
+  }
+
+  &__demo-notice {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background: rgba(0, 212, 255, 0.06);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: $radius-md;
+    font-size: 12px;
+    color: $color-text-secondary;
+    margin-bottom: $spacing-md;
+    flex-shrink: 0;
+    .el-icon { color: $color-accent; font-size: 16px; }
+  }
+
+  // === 网格视图 ===
+  &__grid {
+    flex: 1;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: $spacing-md;
+    align-content: start;
+    padding-bottom: $spacing-lg;
+  }
+
+  &__card {
+    background: $color-bg-card;
+    backdrop-filter: blur(24px) saturate(1.2);
+    border-radius: $radius-lg;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all $transition-normal;
+    border: 1px solid $color-border;
+    box-shadow: $shadow-sm;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, $color-accent, $color-purple);
+      opacity: 0;
+      transition: opacity $transition-normal;
+    }
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-card-hover;
+      border-color: rgba(148, 180, 214, 0.12);
+      &::before { opacity: 1; }
+    }
+  }
+
+  &__card-thumb {
+    position: relative;
+    height: 140px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(139, 92, 246, 0.06));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  &__card-mock-thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-text-muted;
+    opacity: 0.4;
+    transition: opacity $transition-normal;
+    .video-lib__card:hover & { opacity: 0.6; }
+  }
+
+  &__card-analyzing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(0, 212, 255, 0.15);
+    border-radius: $radius-sm;
+    font-size: 11px;
+    color: $color-accent;
+    .el-icon { font-size: 14px; }
+  }
+
+  &__card-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $transition-normal;
+    .video-lib__card:hover & { transform: scale(1.05); }
+  }
+
+  &__card-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: $color-text-muted;
+    opacity: 0.5;
+    transition: opacity $transition-normal;
+    .video-lib__card:hover & { opacity: 0.7; }
+  }
+
+  &__card-placeholder-text {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  &__card-ai-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    background: linear-gradient(135deg, $color-purple, $color-accent);
+    color: $color-bg-deep;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: $radius-sm;
+    letter-spacing: 1.5px;
+    box-shadow: 0 2px 12px rgba(139, 92, 246, 0.3);
+  }
+
+  &__card-duration {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    color: $color-text-primary;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: $radius-xs;
+    font-family: $font-family-mono;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  &__card-info {
+    padding: $spacing-md;
+    position: relative;
+  }
+
+  &__card-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: $color-text-primary;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+
+  &__card-meta {
+    display: flex;
+    gap: $spacing-md;
+    font-size: 12px;
+    color: $color-text-muted;
+    margin-top: 6px;
+    font-family: $font-family-mono;
+    letter-spacing: 0.02em;
+  }
+
+  &__card-tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    .el-tag { font-size: 11px; }
+  }
+
+  &__card-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: $color-text-secondary;
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  &__status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: $radius-round;
+    flex-shrink: 0;
+    &.is-completed {
+      background: $color-success;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+    }
+    &.is-analyzing {
+      background: $color-accent;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+      animation: analyzing-pulse 1.5s infinite;
+    }
+    &.is-pending {
+      background: $color-text-muted;
+    }
+  }
+
+  // === 列表视图 ===
+  &__list {
+    flex: 1;
+    overflow-y: auto;
+    .el-table {
+      background: transparent !important;
+      --el-table-bg-color: transparent;
+      --el-table-tr-bg-color: transparent;
+      --el-table-header-bg-color: #{rgba(12, 22, 42, 0.5)};
+      --el-table-row-hover-bg-color: #{rgba(0, 212, 255, 0.04)};
+      --el-table-border-color: #{$color-border};
+      --el-table-text-color: #{$color-text-primary};
+      --el-table-header-text-color: #{$color-text-muted};
+    }
+  }
+
+  &__list-thumb {
+    width: 64px;
+    height: 36px;
+    background: rgba(0, 212, 255, 0.04);
+    border-radius: $radius-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-text-muted;
+    border: 1px solid $color-border-subtle;
+    overflow: hidden;
+  }
+
+  &__list-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__card-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $transition-normal;
+    .video-lib__card:hover & {
+      transform: scale(1.05);
+    }
+  }
+
+  &__table-row { cursor: pointer; }
+
+  // === 上传进度 ===
+  &__upload-progress {
+    margin-top: $spacing-md;
+    padding: $spacing-md;
+    background: rgba(0, 212, 255, 0.04);
+    border-radius: $radius-md;
+    border: 1px solid $color-border;
+  }
+
+  &__upload-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+    font-size: 13px;
+    color: $color-text-secondary;
+    span:last-child {
+      font-family: $font-family-mono;
+      color: $color-accent;
+      font-weight: 600;
+    }
+  }
+
+  &__upload-status {
+    margin-top: $spacing-sm;
+    font-size: 12px;
+    color: $color-text-muted;
+    text-align: center;
+  }
+
+  // === 演示模式提示 ===
+  &__demo-notice {
+    position: fixed;
+    bottom: $spacing-lg;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: 10px 20px;
+    background: rgba(0, 212, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: $radius-lg;
+    font-size: 12px;
+    color: $color-text-secondary;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    .el-icon {
+      color: $color-accent;
+      font-size: 16px;
+    }
+  }
+}
+
+@keyframes analyzing-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+  50% { opacity: 0.6; box-shadow: 0 0 8px 3px rgba(0, 212, 255, 0.15); }
+}
+
+// === 响应式布局 ===
+@include respond-to('xl') {
+  .video-lib {
+    padding: $spacing-md;
+    &__grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  }
+}
+
+@include respond-to('lg') {
+  .video-lib {
+    &__header { flex-direction: column; align-items: stretch; }
+    &__search { width: 100%; }
+    &__search-input, &__filter-select, &__date-picker { width: 100%; flex: 1; min-width: 120px; }
+    &__actions { justify-content: flex-end; }
+  }
+}
+
+@include respond-to('md') {
+  .video-lib {
+    padding: $spacing-sm;
+    &__grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: $spacing-sm; }
+    &__card-thumb { height: 120px; }
+    &__stats { flex-wrap: wrap; gap: $spacing-sm; font-size: 12px; }
+  }
+}
+
+@include respond-to('sm') {
+  .video-lib {
+    padding: $spacing-xs $spacing-sm;
+    &__grid { grid-template-columns: 1fr; gap: $spacing-sm; }
+    &__card-thumb { height: 160px; }
+    &__search { flex-direction: column; }
+    &__search-input, &__filter-select, &__date-picker { width: 100%; }
+    &__stats { 
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: $spacing-xs;
+    }
+    &__stat-item {
+      min-width: 0;
+      padding: $spacing-xs $spacing-sm;
+    }
+    &__stat-value { font-size: 16px; }
+    &__stat-label { font-size: 10px; }
+    &__demo-notice {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      transform: none;
+      margin-bottom: $spacing-sm;
+    }
+    &__actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+    &__upload-demo-tip {
+      font-size: 11px;
+    }
+  }
+}

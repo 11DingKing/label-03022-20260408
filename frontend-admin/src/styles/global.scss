@@ -1,0 +1,588 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: $font-family;
+  font-size: 14px;
+  color: $color-text-primary;
+  background: $color-bg-deep;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  letter-spacing: 0.01em;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+// === 滚动条 ===
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 180, 214, 0.12);
+  border-radius: 10px;
+  &:hover { background: rgba(148, 180, 214, 0.22); }
+}
+
+// === Element Plus 暗色覆盖 ===
+.el-dialog {
+  background: $color-bg-card-solid !important;
+  border: 1px solid $color-border !important;
+  border-radius: $radius-lg !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(40px);
+  .el-dialog__header {
+    border-bottom: 1px solid $color-border;
+    padding: 18px 24px;
+  }
+  .el-dialog__body { padding: 24px; }
+  .el-dialog__title { color: $color-text-primary; font-weight: 600; }
+  .el-dialog__footer { border-top: 1px solid $color-border; padding: 16px 24px; }
+}
+
+.el-message-box {
+  background: $color-bg-card-solid !important;
+  border: 1px solid $color-border !important;
+  border-radius: $radius-lg !important;
+}
+
+.el-input__wrapper {
+  background: rgba(255, 255, 255, 0.03) !important;
+  box-shadow: 0 0 0 1px $color-border inset, $shadow-inset !important;
+  border-radius: $radius-md !important;
+  transition: all $transition-fast !important;
+  &:hover { box-shadow: 0 0 0 1px rgba(148, 180, 214, 0.15) inset !important; }
+  &.is-focus { box-shadow: 0 0 0 1px $color-accent inset, 0 0 0 3px rgba(0, 212, 255, 0.08) !important; }
+}
+
+// Input Group 按钮样式 (输入框后面的按钮)
+.el-input-group__append,
+.el-input-group__prepend {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid $color-border !important;
+  color: $color-text-primary !important;
+  
+  .el-button {
+    background: transparent !important;
+    border: none !important;
+    color: $color-text-primary !important;
+    
+    &:hover {
+      color: $color-accent !important;
+      background: rgba(0, 212, 255, 0.1) !important;
+    }
+  }
+}
+
+// Textarea 样式修复 - 深色主题
+.el-textarea {
+  .el-textarea__inner {
+    background-color: rgba(10, 18, 32, 0.95) !important;
+    background: rgba(10, 18, 32, 0.95) !important;
+    border: 1px solid $color-border !important;
+    border-radius: $radius-md !important;
+    color: $color-text-primary !important;
+    transition: all $transition-fast !important;
+    resize: vertical;
+    
+    &::placeholder {
+      color: $color-text-muted !important;
+    }
+    &:hover {
+      border-color: rgba(148, 180, 214, 0.2) !important;
+    }
+    &:focus {
+      border-color: $color-accent !important;
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1) !important;
+      background-color: rgba(10, 18, 32, 1) !important;
+    }
+  }
+}
+
+// 确保所有 textarea 都应用深色样式
+textarea.el-textarea__inner {
+  background-color: rgba(10, 18, 32, 0.95) !important;
+  color: $color-text-primary !important;
+}
+
+// Input 内部文字颜色
+.el-input__inner {
+  color: $color-text-primary !important;
+  &::placeholder {
+    color: $color-text-muted !important;
+  }
+}
+
+// Input Group 按钮样式（输入框后置按钮）
+.el-input-group__append,
+.el-input-group__prepend {
+  background: rgba(0, 212, 255, 0.15) !important;
+  border: 1px solid $color-border !important;
+  color: $color-accent !important;
+  
+  .el-button {
+    background: transparent !important;
+    border: none !important;
+    color: $color-accent !important;
+    
+    &:hover {
+      background: rgba(0, 212, 255, 0.2) !important;
+      color: $color-accent-soft !important;
+    }
+  }
+}
+
+.el-select__wrapper {
+  background: rgba(255, 255, 255, 0.03) !important;
+  box-shadow: 0 0 0 1px $color-border inset !important;
+  border-radius: $radius-md !important;
+}
+
+.el-button {
+  border-radius: $radius-md;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: all $transition-fast;
+}
+
+.el-button--primary {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.18), rgba(0, 153, 204, 0.12)) !important;
+  border: 1px solid rgba(0, 212, 255, 0.6) !important;
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+  color: $color-accent !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+  .el-icon { color: $color-accent !important; }
+  &:hover {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.28), rgba(0, 153, 204, 0.2)) !important;
+    border-color: rgba(0, 212, 255, 0.85) !important;
+    box-shadow: 0 0 28px rgba(0, 212, 255, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    text-shadow: 0 0 16px rgba(0, 212, 255, 0.8);
+    transform: translateY(-1px);
+    .el-icon { color: #fff !important; }
+  }
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2) !important;
+  }
+}
+
+// 文字按钮样式修复 - 确保在深色背景下可读
+.el-button--text {
+  color: $color-text-primary !important;
+  &:hover {
+    color: $color-accent !important;
+    background: $color-accent-subtle !important;
+  }
+  &.el-button--primary {
+    color: $color-accent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    &:hover {
+      color: $color-accent-soft !important;
+      background: $color-accent-subtle !important;
+    }
+  }
+}
+
+// 链接按钮样式修复
+.el-button--link {
+  color: $color-accent !important;
+  &:hover {
+    color: $color-accent-soft !important;
+  }
+}
+
+// 默认按钮样式
+.el-button--default {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid $color-border !important;
+  color: $color-text-primary !important;
+  .el-icon {
+    color: $color-text-primary !important;
+  }
+  &:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: $color-accent !important;
+    color: $color-accent !important;
+    .el-icon {
+      color: $color-accent !important;
+    }
+  }
+}
+
+// 危险按钮
+.el-button--danger {
+  &.is-text, &.el-button--text {
+    color: $color-danger !important;
+    background: transparent !important;
+    &:hover {
+      color: #ff6b6b !important;
+      background: $color-danger-light !important;
+    }
+  }
+}
+
+// 成功按钮
+.el-button--success {
+  &.is-text, &.el-button--text {
+    color: $color-success !important;
+    background: transparent !important;
+    &:hover {
+      color: #4ade80 !important;
+      background: $color-success-light !important;
+    }
+  }
+}
+
+// 警告按钮
+.el-button--warning {
+  &.is-text, &.el-button--text {
+    color: $color-warning !important;
+    background: transparent !important;
+    &:hover {
+      color: #fbbf24 !important;
+      background: $color-warning-light !important;
+    }
+  }
+}
+
+// 信息按钮
+.el-button--info {
+  &.is-text, &.el-button--text {
+    color: $color-text-secondary !important;
+    background: transparent !important;
+    &:hover {
+      color: $color-text-primary !important;
+      background: rgba(255, 255, 255, 0.05) !important;
+    }
+  }
+}
+
+.el-tag {
+  border: 1px solid $color-border;
+  background: $color-accent-subtle;
+  color: $color-accent-soft;
+  border-radius: $radius-sm;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.el-table {
+  --el-table-bg-color: transparent !important;
+  --el-table-tr-bg-color: transparent !important;
+  --el-table-header-bg-color: #{rgba(12, 22, 42, 0.5)} !important;
+  --el-table-row-hover-bg-color: #{rgba(0, 212, 255, 0.04)} !important;
+  --el-table-border-color: #{$color-border} !important;
+  --el-table-text-color: #{$color-text-primary} !important;
+  --el-table-header-text-color: #{$color-text-muted} !important;
+}
+
+.el-upload-dragger {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px dashed $color-border !important;
+  border-radius: $radius-lg !important;
+  &:hover { border-color: $color-accent !important; }
+}
+
+// Upload 文件列表样式
+.el-upload-list {
+  .el-upload-list__item {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid $color-border !important;
+    border-radius: $radius-md !important;
+    color: $color-text-primary !important;
+    transition: all $transition-fast !important;
+    
+    &:hover {
+      background: rgba(0, 212, 255, 0.06) !important;
+      border-color: $color-accent !important;
+    }
+    
+    .el-upload-list__item-name {
+      color: $color-text-primary !important;
+    }
+    
+    .el-upload-list__item-status-label {
+      color: $color-success !important;
+    }
+    
+    .el-icon--close {
+      color: $color-text-muted !important;
+      &:hover {
+        color: $color-danger !important;
+      }
+    }
+    
+    .el-icon--close-tip {
+      color: $color-text-muted !important;
+    }
+  }
+}
+
+// === 通用工具类 ===
+.text-accent { color: $color-accent; }
+.text-purple { color: $color-purple; }
+.text-muted { color: $color-text-muted; }
+.text-mono { font-family: $font-family-mono; }
+
+.glass-card {
+  background: $color-bg-card;
+  backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  transition: all $transition-normal;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+  }
+}
+
+.glow-border {
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  position: relative;
+  transition: all $transition-normal;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), transparent 40%, transparent 60%, rgba(139, 92, 246, 0.06));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    padding: 1px;
+    opacity: 0;
+    transition: opacity $transition-normal;
+    pointer-events: none;
+  }
+  &:hover {
+    border-color: rgba(148, 180, 214, 0.12);
+    box-shadow: $shadow-card-hover;
+    &::after { opacity: 1; }
+  }
+}
+
+// === 页面过渡 ===
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition: opacity $transition-normal, transform $transition-normal;
+}
+.page-fade-enter-from { opacity: 0; transform: translateY(8px) scale(0.99); }
+.page-fade-leave-to { opacity: 0; transform: translateY(-8px) scale(0.99); }
+
+// 滑动过渡
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all $transition-normal;
+}
+
+.slide-left-enter-from { opacity: 0; transform: translateX(30px); }
+.slide-left-leave-to { opacity: 0; transform: translateX(-30px); }
+.slide-right-enter-from { opacity: 0; transform: translateX(-30px); }
+.slide-right-leave-to { opacity: 0; transform: translateX(30px); }
+
+// 缩放过渡
+.scale-enter-active,
+.scale-leave-active {
+  transition: all $transition-normal;
+}
+.scale-enter-from { opacity: 0; transform: scale(0.95); }
+.scale-leave-to { opacity: 0; transform: scale(1.05); }
+
+// 弹出过渡
+.popup-enter-active {
+  transition: all $transition-spring;
+}
+.popup-leave-active {
+  transition: all $transition-fast;
+}
+.popup-enter-from { opacity: 0; transform: scale(0.9) translateY(10px); }
+.popup-leave-to { opacity: 0; transform: scale(0.95); }
+
+// 淡入淡出
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity $transition-normal;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// === 日期选择器移动端适配 ===
+@media (max-width: 640px) {
+  // 日期范围弹出面板
+  .el-date-range-picker {
+    width: auto !important;
+    max-width: 92vw !important;
+
+    .el-picker-panel__body {
+      min-width: 0 !important;
+    }
+
+    // 两个月份面板改为纵向堆叠
+    .el-picker-panel__body-wrapper {
+      .el-picker-panel__body {
+        display: flex !important;
+        flex-direction: column !important;
+      }
+    }
+
+    .el-date-range-picker__content {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 8px !important;
+      float: none !important;
+    }
+
+    // 中间分隔箭头
+    .el-picker-panel__body .el-date-range-picker__header {
+      .el-picker-panel__icon-btn {
+        font-size: 14px;
+      }
+    }
+  }
+
+  // 通过 popper-class 精确定位
+  .video-lib-date-popper {
+    max-width: 92vw !important;
+    .el-date-range-picker {
+      width: auto !important;
+      max-width: 92vw !important;
+    }
+  }
+
+  // 日期输入框自适应
+  .el-date-editor--daterange {
+    max-width: 100% !important;
+    width: 100% !important;
+    .el-range-separator {
+      padding: 0 2px !important;
+      flex: none !important;
+    }
+    .el-range-input {
+      font-size: 12px !important;
+    }
+  }
+}
+
+// === Tabs 文字可读性 ===
+.el-tabs__item {
+  color: $color-text-secondary !important;
+
+  &.is-active {
+    color: var(--theme-accent, $color-accent) !important;
+  }
+
+  &:hover {
+    color: $color-text-primary !important;
+  }
+}
+
+// === 主题 CSS 变量默认值 ===
+:root {
+  --theme-accent: #00d4ff;
+  --theme-accent-soft: #38bdf8;
+  --theme-accent-light: rgba(0, 212, 255, 0.12);
+  --theme-accent-glow: rgba(0, 212, 255, 0.35);
+  --theme-accent-subtle: rgba(0, 212, 255, 0.06);
+  --theme-bg-deep: #050a12;
+  --theme-bg-primary: #0a1220;
+  --theme-bg-card: rgba(12, 22, 42, 0.75);
+}
+
+// === 主题动态覆盖 ===
+// 以下样式使用 CSS 变量，使主题切换实时生效
+
+html, body {
+  background: var(--theme-bg-deep);
+}
+
+// 主按钮跟随主题色
+.el-button--primary {
+  background: linear-gradient(135deg, var(--theme-accent-light), var(--theme-accent-subtle)) !important;
+  border-color: var(--theme-accent) !important;
+  color: var(--theme-accent) !important;
+  box-shadow: 0 0 16px var(--theme-accent-subtle) !important;
+  text-shadow: 0 0 12px var(--theme-accent-glow);
+  .el-icon { color: var(--theme-accent) !important; }
+  &:hover {
+    background: linear-gradient(135deg, var(--theme-accent-light), var(--theme-accent-light)) !important;
+    border-color: var(--theme-accent) !important;
+    box-shadow: 0 0 28px var(--theme-accent-glow) !important;
+    color: #fff !important;
+    .el-icon { color: #fff !important; }
+  }
+}
+
+// 标签跟随主题色
+.el-tag {
+  border-color: var(--theme-accent-subtle);
+  background: var(--theme-accent-subtle);
+  color: var(--theme-accent-soft);
+}
+
+// 输入框聚焦跟随主题色
+.el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--theme-accent) inset, 0 0 0 3px var(--theme-accent-subtle) !important;
+}
+
+// 导航激活态跟随主题色
+.settings__nav-item.is-active {
+  background: var(--theme-accent-light);
+  color: var(--theme-accent);
+  &::before { background: var(--theme-accent); box-shadow: 0 0 8px var(--theme-accent-glow); }
+}
+
+// 选中主题卡片边框跟随主题色
+.settings__theme-card.is-active {
+  border-color: var(--theme-accent);
+  box-shadow: 0 0 24px var(--theme-accent-subtle), 0 0 0 1px var(--theme-accent-light);
+}
+
+// AI 机器人跟随主题色
+.ai-bot__icon { color: var(--theme-accent); filter: drop-shadow(0 0 8px var(--theme-accent-glow)); }
+.ai-bot__avatar.is-active .ai-bot__avatar-inner { border-color: var(--theme-accent); box-shadow: 0 0 40px var(--theme-accent-glow); }
+.ai-bot__pulse { border-color: var(--theme-accent); }
+
+// 模态标题跟随主题色
+.ai-bot-modal__title {
+  background: linear-gradient(135deg, var(--theme-accent), var(--theme-accent-soft));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// glow-border hover 跟随主题色
+.glow-border::after {
+  background: linear-gradient(135deg, var(--theme-accent-light), transparent 40%, transparent 60%, rgba(139, 92, 246, 0.06));
+}
+
+// 分析页 section title icon 跟随主题色
+.analysis__section-title .el-icon { color: var(--theme-accent); }
+
+// 仪表盘页面背景跟随主题色
+.dashboard { background: var(--theme-bg-deep); }
+.settings { background: var(--theme-bg-deep); }
+.video-library { background: var(--theme-bg-deep); }
+.analysis { background: var(--theme-bg-deep); }

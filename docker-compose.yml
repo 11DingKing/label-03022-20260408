@@ -1,0 +1,50 @@
+services:
+  frontend-admin:
+    build:
+      context: ./frontend-admin
+      dockerfile: Dockerfile
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    environment:
+      - VITE_USE_MOCK=true
+      - VITE_API_BASE_URL=/api
+    networks:
+      - app-network
+    # 后端服务就绪后取消注释
+    # depends_on:
+    #   - backend
+
+  # === 后端服务（待实现）===
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   restart: unless-stopped
+  #   environment:
+  #     - NODE_ENV=production
+  #     - DATABASE_URL=postgresql://user:pass@db:5432/video_ai
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - db
+  #
+  # db:
+  #   image: postgres:15-alpine
+  #   environment:
+  #     - POSTGRES_USER=user
+  #     - POSTGRES_PASSWORD=pass
+  #     - POSTGRES_DB=video_ai
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   networks:
+  #     - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+# volumes:
+#   postgres_data:
